@@ -1,0 +1,25 @@
+# Lazy.nvim plugin data
+lazy-lock.json
+
+# Plugin build artifacts
+plugin/
+
+# Neovim swap, backup, undo files
+*.swp
+*.swo
+*~
+
+# Compiled Lua bytecode
+luac.out
+
+# Mason installed tools
+.mason/
+
+# Session files
+sessions/
+
+# Local project config
+.neoconf.json
+
+# OS files
+.DS_Store
