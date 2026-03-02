@@ -11,7 +11,7 @@ return {
     -- Configuration table of features provided by AstroLSP
     features = {
       codelens = true, -- enable/disable codelens refresh on start
-      inlay_hints = false, -- enable/disable inlay hints on start
+      inlay_hints = true, -- enable/disable inlay hints on start
       semantic_tokens = true, -- enable/disable semantic token highlighting
     },
     -- customize lsp formatting options
@@ -27,22 +27,25 @@ return {
         },
       },
       disabled = { -- disable formatting capabilities for the listed language servers
-        -- disable lua_ls formatting capability if you want to use StyLua to format your lua code
-        -- "lua_ls",
+        "vtsls", -- let conform.nvim handle formatting via prettier
+        "lua_ls", -- let conform.nvim handle formatting via stylua
       },
-      timeout_ms = 1000, -- default format timeout
+      timeout_ms = 2000, -- default format timeout
       -- filter = function(client) -- fully override the default formatting function
       --   return true
       -- end
     },
     -- enable servers that you already have installed without mason
     servers = {
-      -- "pyright"
+      "eslint",
     },
-    -- customize language server configuration options passed to `lspconfig`
     ---@diagnostic disable: missing-fields
     config = {
-      -- clangd = { capabilities = { offsetEncoding = "utf-8" } },
+      eslint = {
+        settings = {
+          workingDirectories = { mode = "auto" },
+        },
+      },
     },
     -- customize how language servers are attached
     handlers = {
@@ -56,6 +59,19 @@ return {
     -- Configure buffer local auto commands to add when attaching a language server
     autocmds = {
       -- first key is the `augroup` to add the auto commands to (:h augroup)
+      eslint_fix_on_save = {
+        cond = function(client) return client.name == "eslint" end,
+        {
+          event = "BufWritePre",
+          desc = "ESLint fix all on save",
+          callback = function()
+            vim.lsp.buf.code_action({
+              context = { only = { "source.fixAll.eslint" } },
+              apply = true,
+            })
+          end,
+        },
+      },
       lsp_codelens_refresh = {
         -- Optional condition to create/delete auto command group
         -- can either be a string of a client capability or a function of `fun(client, bufnr): boolean`
@@ -83,6 +99,16 @@ return {
           function() vim.lsp.buf.declaration() end,
           desc = "Declaration of current symbol",
           cond = "textDocument/declaration",
+        },
+        ["<Leader>lo"] = {
+          function()
+            vim.lsp.buf.code_action({
+              context = { only = { "source.organizeImports" } },
+              apply = true,
+            })
+          end,
+          desc = "Organize imports",
+          cond = "textDocument/codeAction",
         },
         ["<Leader>uY"] = {
           function() require("astrolsp.toggles").buffer_semantic_tokens() end,

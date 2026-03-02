@@ -29,7 +29,6 @@ for i = 1, 9 do
   numbered_keys[#numbered_keys + 1] = {
     "<Leader>" .. i .. "t",
     function() toggle_term(10 + i) end,
-    mode = { "n", "t" },
     desc = "Terminal: #" .. i,
   }
 end
