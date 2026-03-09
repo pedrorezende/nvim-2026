@@ -13,7 +13,6 @@ return {
       "html",
       "css",
       "json",
-      "jsonc",
       "yaml",
       "markdown",
       "markdown_inline",

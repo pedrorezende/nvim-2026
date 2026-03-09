@@ -59,9 +59,9 @@ return {
       },
       {
         "<A-g>",
-        function() toggle_term(4) end,
+        function() toggle_term(4, { cmd = "lazygit", close_on_exit = true }) end,
         mode = { "n", "t" },
-        desc = "Terminal: Git / CLI",
+        desc = "Terminal: Lazygit",
       },
       {
         "<A-t>",

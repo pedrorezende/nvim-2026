@@ -43,6 +43,8 @@ return {
         spell = false, -- sets vim.opt.spell
         signcolumn = "yes", -- sets vim.opt.signcolumn
         wrap = false, -- sets vim.opt.wrap
+        ignorecase = true, -- case insensitive search
+        smartcase = true, -- override ignorecase when search has uppercase
       },
       g = { -- vim.g.<key>
         -- configure global vim variables (vim.g)

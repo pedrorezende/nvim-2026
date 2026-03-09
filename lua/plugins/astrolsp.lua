@@ -11,7 +11,7 @@ return {
     -- Configuration table of features provided by AstroLSP
     features = {
       codelens = true, -- enable/disable codelens refresh on start
-      inlay_hints = true, -- enable/disable inlay hints on start
+      inlay_hints = false, -- enable/disable inlay hints on start
       semantic_tokens = true, -- enable/disable semantic token highlighting
     },
     -- customize lsp formatting options
@@ -38,12 +38,21 @@ return {
     -- enable servers that you already have installed without mason
     servers = {
       "eslint",
+      "jsonls",
     },
     ---@diagnostic disable: missing-fields
     config = {
       eslint = {
         settings = {
           workingDirectories = { mode = "auto" },
+        },
+      },
+      jsonls = {
+        settings = {
+          json = {
+            schemas = require("schemastore").json.schemas(),
+            validate = { enable = true },
+          },
         },
       },
     },
@@ -95,6 +104,11 @@ return {
     mappings = {
       n = {
         -- a `cond` key can provided as the string of a server capability to be required to attach, or a function with `client` and `bufnr` parameters from the `on_attach` that returns a boolean
+        grr = {
+          function() Snacks.picker.lsp_references() end,
+          desc = "Search references",
+          cond = "textDocument/references",
+        },
         gD = {
           function() vim.lsp.buf.declaration() end,
           desc = "Declaration of current symbol",

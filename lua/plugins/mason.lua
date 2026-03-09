@@ -9,6 +9,7 @@ return {
         "vtsls",
         "prettier",
         "eslint-lsp",
+        "json-lsp",
         "js-debug-adapter",
       },
     },
