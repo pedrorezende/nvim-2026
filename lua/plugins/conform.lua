@@ -17,6 +17,7 @@ return {
       markdown = { "prettier" },
       graphql = { "prettier" },
       lua = { "stylua" },
+      go = { "goimports", "gofumpt" },
     },
     format_on_save = {
       timeout_ms = 2000,

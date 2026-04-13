@@ -1,33 +1,42 @@
 return {
   {
     "https://codeberg.org/andyg/leap.nvim",
-    enabled = true,
-    keys = {
-      { "gs", mode = { "n", "x", "o" }, desc = "Leap forward to" },
-      { "gS", mode = { "n", "x", "o" }, desc = "Leap backward to" },
-      { "gs", mode = { "n", "x", "o" }, desc = "Leap from windows" },
-    },
-    config = function(_, opts)
-      local leap = require "leap"
-      for k, v in pairs(opts) do
-        leap.opts[k] = v
-      end
-      leap.add_default_mappings(false)
-      vim.keymap.del({ "x", "o" }, "x")
-      vim.keymap.del({ "x", "o" }, "X")
-    end,
+    enabled = false,
   },
   {
     "ggandor/flit.nvim",
-    enabled = true,
-    keys = function()
-      ---@type LazyKeys[]
-      local ret = {}
-      for _, key in ipairs { "f", "F", "t", "T" } do
-        ret[#ret + 1] = { key, mode = { "n", "x", "o" }, desc = key }
-      end
-      return ret
-    end,
-    opts = { labeled_modes = "nx" },
+    enabled = false,
+  },
+  {
+    "folke/flash.nvim",
+    event = "VeryLazy",
+    opts = {
+      modes = {
+        char = {
+          enabled = true,
+          jump_labels = true,
+          jump = {
+            autojump = true,
+            nohlsearch = true,
+          },
+          label = {
+            after = false,
+            before = true,
+          },
+        },
+      },
+      jump = {
+        autojump = true,
+        nohlsearch = true,
+      },
+      label = {
+        after = false,
+        before = true,
+      },
+    },
+    keys = {
+      { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
+      { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
+    },
   },
 }

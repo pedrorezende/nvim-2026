@@ -41,10 +41,10 @@ return {
         relativenumber = true, -- sets vim.opt.relativenumber
         number = true, -- sets vim.opt.number
         spell = false, -- sets vim.opt.spell
-        signcolumn = "yes", -- sets vim.opt.signcolumn
+        signcolumn = "yes", -- sets vim.opt.signcolumn to yes
         wrap = false, -- sets vim.opt.wrap
-        ignorecase = true, -- case insensitive search
-        smartcase = true, -- override ignorecase when search has uppercase
+        ignorecase = true, -- sets vim.opt.ignorecase
+        smartcase = true, -- sets vim.opt.smartcase
       },
       g = { -- vim.g.<key>
         -- configure global vim variables (vim.g)
@@ -73,11 +73,9 @@ return {
           desc = "Close buffer from tabline",
         },
 
-        ["zo"] = { "]<space>", desc = "Jump to next blank line" },
-        ["<leader>/"] = { "<leader>ff", desc = "Find files" },
-
-        -- Terminal menu group
-        ["<Leader>t"] = { desc = "Terminal" },
+        -- tables with just a `desc` key will be registered with which-key if it's installed
+        -- this is useful for naming menus
+        -- ["<Leader>b"] = { desc = "Buffers" },
 
         -- setting a mapping to false will disable it
         -- ["<C-S>"] = false,
