@@ -15,6 +15,16 @@ return {
         char = {
           enabled = true,
           jump_labels = true,
+          config = function(opts)
+            -- disable jump labels when using a count, when recording/executing
+            -- registers, or when in operator-pending mode (e.g. df<char>) so
+            -- the operator completes immediately instead of waiting for a label
+            opts.jump_labels = opts.jump_labels
+              and vim.v.count == 0
+              and vim.fn.reg_executing() == ""
+              and vim.fn.reg_recording() == ""
+              and not vim.fn.mode(true):find "o"
+          end,
           jump = {
             autojump = true,
             nohlsearch = true,
